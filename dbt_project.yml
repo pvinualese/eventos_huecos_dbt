@@ -35,8 +35,14 @@ clean-targets: # directories to be removed by `dbt clean`
 
 models:
   my_new_project:
-    models:
-      load_huecos_raw:
-        +schema: "SCH_RAW"
-        +table: "huecos_raw" # Nombre de la tabla en el esquema SCH_RAW
-        +materialized: "table"
+    stg:
+      +database: "STG"
+      +schema: "SCH_RAW"
+      +materialized: "table"
+      +tags: "stg" 
+    dwh:
+      +database: "DWH"
+      +schema: "SCH_DWH"
+      +materialized: "table"
+      +tags: "dwh"
+      
