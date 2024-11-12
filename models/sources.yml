@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: STG-SCH_LD             
+    schema: SCH_LD           # Esquema en Snowflake
+    database: STG   # Nombre de la base de datos en Snowflake
+
+    tables:
+      - name: huecos         # Nombre de la tabla en el esquema
+      - name: mae            # Nombre de la otra tabla en el esquema
