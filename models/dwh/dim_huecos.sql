@@ -3,12 +3,7 @@
     name='dim_huecos'
 ) }}
 
--- with mae as(
---     select TAMANO_HUECO,
---         DESCRIPCION_TAMANO_HUECO,
---         {{ dbt_utils.generate_surrogate_key(['TAMANO_HUECO']) }} AS surrogate_key_mae
---     from {{ source('STG-SCH_LD', 'mae') }}
--- ),
+
 
 with huecos_raw as(
     select *,

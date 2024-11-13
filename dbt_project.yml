@@ -45,4 +45,9 @@ models:
       +schema: "SCH_DWH"
       +materialized: "table"
       +tags: "dwh"
+    dm:
+      +database: "DM"
+      +schema: "SCH_DM"
+      +materialized: "table"
+      +tags: "dm"
       
