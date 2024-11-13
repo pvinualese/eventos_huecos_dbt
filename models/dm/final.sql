@@ -1,13 +1,10 @@
 {{ config(
-    materialized='incremental',
-    name='final'
+    materialized='incremental'
 ) }}
 
 with mae as(
-    select TAMANO_HUECO,
-        DESCRIPCION_TAMANO_HUECO
-        --{{ dbt_utils.generate_surrogate_key(['TAMANO_HUECO']) }} AS surrogate_key_mae
-    from {{ source('STG-SCH_LD', 'mae') }}
+    select *
+    from {{ ref('mae') }}
 ),
 
 dim_huecos as(
@@ -16,15 +13,17 @@ dim_huecos as(
 )
 
 select 
-    OP,
-    FEC_COMMIT,
-    COD_TERMINAL,
-    COD_HUECO,
-    surrogate_key_mae,
-    DESCRIPCION_TAMANO_HUECO 
-from dim_huecos 
+    d.OP,
+    d.FEC_COMMIT,
+    d.COD_TERMINAL,
+    d.COD_HUECO,
+    mae.DESCRIPCION_TAMANO_HUECO 
+from dim_huecos d
 left join mae 
-    on mae.TAMANO_HUECO = COD_TAMANO 
+    on mae.surrogate_key_mae = d.surrogate_key_mae 
 where OP != 'D'
+{% if is_incremental() %}
+    and surrogate_key_dim not in (select surrogate_key_dim from {{ this }})
+{% endif %}
 
 
